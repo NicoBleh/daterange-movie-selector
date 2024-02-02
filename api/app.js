@@ -16,14 +16,16 @@ app.get('/', function(req, res){
   res.send('Hello World');
 });
 
-app.get('/movies-in-range', function(req, res){
+app.get('/movies-form-year/:year', function(req, res){
   var query =
   `
-  MATCH (movie:Movie {title:$favorite})<-[:ACTED_IN]-(actor)-[:ACTED_IN]->(rec:Movie)
-   RETURN distinct rec.title as title LIMIT 20
+  MATCH (m:Movie)
+  WHERE m.released = $year
+  RETURN m.title as title, m.released as released
   `;
 
-var params = {"favorite": "The Matrix"};
+  console.log(req.params)
+var params = {"year": parseInt(req.params['year'])};
 
 var session = driver.session({database:"neo4j"});
 
