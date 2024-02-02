@@ -24,7 +24,6 @@ app.get('/movies-form-year/:year', function(req, res){
   RETURN m.title as title, m.released as released
   `;
 
-  console.log(req.params)
 var params = {"year": parseInt(req.params['year'])};
 
 var session = driver.session({database:"neo4j"});
@@ -34,11 +33,11 @@ var response = [];
 session.run(query, params)
   .then((result) => {
     result.records.forEach((record) => {
-        response.push(record.get('title'));
+        response.push({"title": record.get('title'), "released": record.get('released')});
     });
     session.close();
 
-    res.send(response);
+    res.json({"movies": response});
   })
   .catch((error) => {
     console.error(error);
@@ -57,4 +56,3 @@ process.on('SIGINT', function() {
   console.log("Bye bye.");
   process.exit(0);
 });
-
