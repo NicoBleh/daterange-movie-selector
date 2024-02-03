@@ -1,4 +1,3 @@
-import './App.css';
 import ApiComponent from './ApiComponent';
 
 function App() {
