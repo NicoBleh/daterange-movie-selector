@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 const ApiComponent = () => {
   const [year, setYear] = useState('');
   const [data, setData] = useState([]);
-  const apiUrl = 'http://localhost:3000/movies-form-year/';
+  const apiUrl = process.env.REACT_APP_MOVIE_API_URL || '';
   const omdbApiKey = process.env.REACT_APP_OMDB_API_KEY || '';
 
   useEffect(() => {
