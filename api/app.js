@@ -24,6 +24,8 @@ app.get('/movies-form-year/:year', function(req, res){
   MATCH (m:Movie)
   WHERE m.released = $year
   RETURN m.title as title, m.released as released
+  ORDER BY RAND()
+  LIMIT 3
   `;
 
 var params = {"year": parseInt(req.params['year'])};
