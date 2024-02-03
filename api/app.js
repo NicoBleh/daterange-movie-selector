@@ -2,7 +2,8 @@
 
 require("dotenv").config();
 
-var express = require('express');
+const express = require('express');
+const cors = require('cors');
 
 /* setup neo4j */
 const neo4j = require('neo4j-driver');
@@ -10,7 +11,8 @@ const driver = neo4j.driver(process.env.MOVIE_DATABASE_URL,
   neo4j.auth.basic(process.env.MOVIE_DATABASE_USERNAME, process.env.MOVIE_DATABASE_PASSWORD), 
   {/* encrypted: 'ENCRYPTION_OFF' */});
 
-var app = express();
+const app = express();
+app.use(cors());
 
 app.get('/', function(req, res){
   res.send('Hello World');
@@ -37,7 +39,7 @@ session.run(query, params)
     });
     session.close();
 
-    res.json({"movies": response});
+    res.json(response);
   })
   .catch((error) => {
     console.error(error);
